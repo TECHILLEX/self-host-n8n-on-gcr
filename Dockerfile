@@ -1,11 +1,13 @@
 FROM docker.n8n.io/n8nio/n8n:latest
 
-# Copy the script and ensure it has proper permissions
 COPY startup.sh /
+COPY install-community-nodes.sh /
+COPY community-nodes.txt /tmp/
+
 USER root
-RUN chmod +x /startup.sh
+RUN chmod +x /startup.sh /install-community-nodes.sh
+RUN /install-community-nodes.sh
+
 USER node
 EXPOSE 5678
-
-# Use shell form to help avoid exec format issues
 ENTRYPOINT ["/bin/sh", "/startup.sh"]

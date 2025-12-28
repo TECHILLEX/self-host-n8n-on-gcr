@@ -45,7 +45,6 @@ resource "google_project_service" "cloudresourcemanager" {
 
 # --- Artifact Registry (Optional - only for custom image) --- #
 resource "google_artifact_registry_repository" "n8n_repo" {
-  count         = var.use_custom_image ? 1 : 0
   project       = var.gcp_project_id
   location      = var.gcp_region
   repository_id = var.artifact_repo_name
@@ -265,6 +264,10 @@ resource "google_cloud_run_v2_service" "n8n" {
         value = var.generic_timezone
       }
       env {
+        name  = "N8N_COMMUNITY_NODES_ENABLED"
+        value = "true"
+      }
+      env {
         name  = "QUEUE_HEALTH_CHECK_ACTIVE"
         value = "true"
       }
@@ -328,7 +331,8 @@ resource "google_cloud_run_v2_service" "n8n" {
     google_project_service.run,
     google_project_iam_member.sql_client,
     google_secret_manager_secret_iam_member.db_password_secret_accessor,
-    google_secret_manager_secret_iam_member.encryption_key_secret_accessor
+    google_secret_manager_secret_iam_member.encryption_key_secret_accessor,
+    google_artifact_registry_repository.n8n_repo
   ]
 }
 

@@ -1,0 +1,8 @@
+# Community Nodes Configuration
+# List n8n community nodes to install at build time with pinned versions
+# Format: package-name@version (one per line)
+# Example: n8n-example-xxx@0.1.1
+# Example: @company/n8n-nodes
+
+# Add your community nodes here:
+
