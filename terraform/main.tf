@@ -211,7 +211,7 @@ resource "google_cloud_run_v2_service" "n8n" {
           memory = var.cloud_run_memory
         }
         startup_cpu_boost = true
-        cpu_idle          = false  # This is --no-cpu-throttling
+        cpu_idle          = true  # Allow CPU to idle when no traffic (enables scale-to-zero)
       }
       
       # Only set N8N_PATH for custom image
